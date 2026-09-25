@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: fintrack-api
+  datasource:
+    url: jdbc:h2:file:./data/fintrack;AUTO_SERVER=TRUE
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+  h2:
+    console:
+      enabled: false
+
+server:
+  port: 8080
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:VGhpcy1pcy1hLWRldi1vbmx5LWtleS10aGF0LW11c3QtYmUtcmVwbGFjZWQtaW4tcHJvZA==}
+    expiration: PT2H
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    persist-authorization: true
+
+logging:
+  level:
+    org.springframework.security: INFO

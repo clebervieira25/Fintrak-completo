@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fintrack.controller.RelatorioController"
+      spacing="18" prefWidth="480" styleClass="fundo">
+    <padding><Insets top="26" right="30" bottom="26" left="30"/></padding>
+    <Label text="Resumo financeiro" styleClass="titulo-form"/>
+    <GridPane hgap="30" vgap="14" styleClass="cartao">
+        <padding><Insets top="20" right="22" bottom="20" left="22"/></padding>
+        <Label text="Total de receitas" GridPane.rowIndex="0"/>
+        <Label fx:id="labelReceitas" text="R$ 0,00" styleClass="valor-receita" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+        <Label text="Total de despesas" GridPane.rowIndex="1"/>
+        <Label fx:id="labelDespesas" text="R$ 0,00" styleClass="valor-despesa" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        <Separator GridPane.columnSpan="2" GridPane.rowIndex="2"/>
+        <Label text="Saldo" styleClass="saldo-legenda" GridPane.rowIndex="3"/>
+        <Label fx:id="labelSaldo" text="R$ 0,00" styleClass="saldo-valor" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+        <Label text="Transações cadastradas" GridPane.rowIndex="4"/>
+        <Label fx:id="labelQuantidade" text="0" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+    </GridPane>
+    <HBox alignment="CENTER_RIGHT"><Button text="Fechar" onAction="#fechar"/></HBox>
+</VBox>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="br.com.fintrack.controller.PrincipalController"
+            styleClass="fundo">
+    <top>
+        <VBox spacing="6" styleClass="cabecalho">
+            <padding><Insets top="22" right="25" bottom="18" left="25"/></padding>
+            <Label text="FinTrack" styleClass="titulo"/>
+            <Label text="Seu controle financeiro em um só lugar" styleClass="subtitulo"/>
+        </VBox>
+    </top>
+    <center>
+        <VBox spacing="14">
+            <padding><Insets top="20" right="25" bottom="20" left="25"/></padding>
+            <HBox spacing="10">
+                <Button fx:id="botaoNova" text="+ Nova transação" styleClass="botao-primario"/>
+                <Button text="+ Nova categoria" onAction="#novaCategoria"/>
+                <Button text="Editar" onAction="#editarTransacao"/>
+                <Button text="Remover" onAction="#removerTransacao" styleClass="botao-perigo"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="botaoRelatorio" text="Ver relatório"/>
+            </HBox>
+            <TableView fx:id="tabelaTransacoes" VBox.vgrow="ALWAYS">
+                <placeholder>
+                    <Label text="Nenhuma transação cadastrada"/>
+                </placeholder>
+                <columns>
+                    <TableColumn fx:id="colunaData" text="Data" prefWidth="110"/>
+                    <TableColumn fx:id="colunaDescricao" text="Descrição" prefWidth="300"/>
+                    <TableColumn fx:id="colunaValor" text="Valor" prefWidth="140"/>
+                    <TableColumn fx:id="colunaTipo" text="Tipo" prefWidth="120"/>
+                    <TableColumn fx:id="colunaMensal" text="Mensal" prefWidth="90"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" spacing="12" styleClass="rodape">
+            <padding><Insets top="14" right="25" bottom="14" left="25"/></padding>
+            <Label text="Saldo atual:" styleClass="saldo-legenda"/>
+            <Label fx:id="labelSaldo" text="R$ 0,00" styleClass="saldo-valor"/>
+        </HBox>
+    </bottom>
+</BorderPane>

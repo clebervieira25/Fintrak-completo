@@ -1,0 +1,9 @@
+package br.com.fintrack.controller;
+import br.com.fintrack.dto.CategoriaDTO; import br.com.fintrack.service.CategoriaService; import io.swagger.v3.oas.annotations.*; import io.swagger.v3.oas.annotations.responses.*; import io.swagger.v3.oas.annotations.tags.Tag; import jakarta.validation.Valid; import org.springframework.http.*; import org.springframework.security.access.prepost.PreAuthorize; import org.springframework.web.bind.annotation.*; import java.util.*;
+@RestController @RequestMapping("/api/v1/usuarios/{usuarioId}/categorias") @Tag(name="Categorias") @PreAuthorize("#usuarioId == authentication.principal.id") public class CategoriaController{
+ private final CategoriaService service; public CategoriaController(CategoriaService s){service=s;}
+ @GetMapping @Operation(summary="Listar categorias do usuário") public List<CategoriaDTO> listar(@PathVariable Long usuarioId){return service.listar(usuarioId);}
+ @PostMapping @ResponseStatus(HttpStatus.CREATED) @Operation(summary="Criar categoria") @ApiResponses({@ApiResponse(responseCode="201",description="Criada"),@ApiResponse(responseCode="400",description="Inválida"),@ApiResponse(responseCode="401",description="Não autenticado"),@ApiResponse(responseCode="403",description="Outro usuário"),@ApiResponse(responseCode="409",description="Nome duplicado")}) public CategoriaDTO criar(@PathVariable Long usuarioId,@Valid @RequestBody CategoriaDTO d){return service.criar(usuarioId,d);}
+ @PutMapping("/{id}") @Operation(summary="Atualizar categoria") public CategoriaDTO atualizar(@PathVariable Long usuarioId,@PathVariable Long id,@Valid @RequestBody CategoriaDTO d){return service.atualizar(usuarioId,id,d);}
+ @DeleteMapping("/{id}") @ResponseStatus(HttpStatus.NO_CONTENT) @Operation(summary="Remover categoria") public void remover(@PathVariable Long usuarioId,@PathVariable Long id){service.remover(usuarioId,id);}
+}

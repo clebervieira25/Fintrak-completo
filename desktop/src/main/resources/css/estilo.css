@@ -1,0 +1,22 @@
+.root { -fx-font-family: "Segoe UI", Arial, sans-serif; -fx-font-size: 14px; }
+.fundo { -fx-background-color: #f5f7fb; }
+.cabecalho { -fx-background-color: linear-gradient(to right, #173b57, #256b78); }
+.titulo { -fx-text-fill: white; -fx-font-size: 30px; -fx-font-weight: bold; }
+.subtitulo { -fx-text-fill: #d7eef0; -fx-font-size: 14px; }
+.titulo-form { -fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #173b57; }
+.button { -fx-background-color: white; -fx-border-color: #cbd5df; -fx-border-radius: 6px; -fx-background-radius: 6px; -fx-padding: 8px 15px; -fx-cursor: hand; }
+.button:hover { -fx-background-color: #edf2f6; }
+.botao-primario { -fx-background-color: #157b83; -fx-border-color: #157b83; -fx-text-fill: white; -fx-font-weight: bold; }
+.botao-primario:hover { -fx-background-color: #11656c; }
+.botao-perigo { -fx-text-fill: #a72a2a; }
+.table-view { -fx-background-color: white; -fx-border-color: #dce3ea; -fx-border-radius: 8px; -fx-background-radius: 8px; }
+.table-view .column-header-background { -fx-background-color: #e8eef3; }
+.table-view .column-header { -fx-background-color: transparent; -fx-padding: 10px; }
+.table-row-cell { -fx-cell-size: 42px; }
+.rodape { -fx-background-color: white; -fx-border-color: #dde4ea transparent transparent transparent; }
+.saldo-legenda { -fx-font-weight: bold; -fx-text-fill: #53616e; }
+.saldo-valor { -fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #173b57; }
+.valor-receita { -fx-text-fill: #18794e; -fx-font-weight: bold; }
+.valor-despesa { -fx-text-fill: #b42318; -fx-font-weight: bold; }
+.cartao { -fx-background-color: white; -fx-border-color: #dde4ea; -fx-border-radius: 8px; -fx-background-radius: 8px; }
+.text-field, .text-area, .combo-box, .date-picker { -fx-background-color: white; -fx-border-color: #bdc9d4; -fx-border-radius: 5px; -fx-background-radius: 5px; }

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fintrack.controller.TransacaoFormController"
+      spacing="16" prefWidth="520" styleClass="fundo">
+    <padding><Insets top="24" right="28" bottom="24" left="28"/></padding>
+    <Label text="Dados da transação" styleClass="titulo-form"/>
+    <GridPane hgap="12" vgap="12">
+        <columnConstraints>
+            <ColumnConstraints minWidth="100" halignment="RIGHT"/>
+            <ColumnConstraints hgrow="ALWAYS"/>
+        </columnConstraints>
+        <Label text="Data:*" GridPane.rowIndex="0"/>
+        <DatePicker fx:id="campoData" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+        <Label text="Descrição:*" GridPane.rowIndex="1"/>
+        <TextField fx:id="campoDescricao" promptText="Ex.: Salário ou supermercado" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        <Label text="Valor:*" GridPane.rowIndex="2"/>
+        <TextField fx:id="campoValor" promptText="Ex.: 150,50" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        <Label text="Tipo:*" GridPane.rowIndex="3"/>
+        <ComboBox fx:id="campoTipo" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+        <Label text="Observação:" GridPane.rowIndex="4"/>
+        <TextArea fx:id="campoObservacao" promptText="Informações adicionais" prefRowCount="3"
+                  wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+        <Label text="Categoria:*" GridPane.rowIndex="5"/>
+        <ComboBox fx:id="campoCategoria" maxWidth="Infinity" GridPane.columnIndex="1" GridPane.rowIndex="5"/>
+        <CheckBox fx:id="campoMensal" text="Transação recorrente mensal"
+                  GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+    </GridPane>
+    <HBox alignment="CENTER_RIGHT" spacing="10">
+        <Button text="Cancelar" onAction="#cancelar"/>
+        <Button text="Salvar" onAction="#salvar" styleClass="botao-primario"/>
+    </HBox>
+</VBox>
