@@ -6,9 +6,12 @@ public final class ApiClient {
  private static final String BASE="http://localhost:8080"; private static final HttpClient HTTP=HttpClient.newHttpClient(); private static final ObjectMapper JSON=new ObjectMapper().registerModule(new JavaTimeModule()).disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
  private ApiClient(){}
  public record TokenResponse(String token,String tipo,Long usuarioId,String nome,String email){}
+ public record MensagemResponse(String mensagem){}
  public record SaldoResponse(double totalReceitas,double totalDespesas,double saldo,String inicio,String fim){}
  public static TokenResponse registrar(String nome,String email,String senha){return enviarPublico("/api/auth/register",Map.of("nome",nome,"email",email,"senha",senha),TokenResponse.class);}
  public static TokenResponse login(String email,String senha){return enviarPublico("/api/auth/login",Map.of("email",email,"senha",senha),TokenResponse.class);}
+ public static MensagemResponse solicitarRecuperacao(String destino,String canal){return enviarPublico("/api/auth/recovery/request",Map.of("destino",destino,"canal",canal),MensagemResponse.class);}
+ public static TokenResponse confirmarRecuperacao(String destino,String canal,String codigo,String novaSenha){return enviarPublico("/api/auth/recovery/confirm",Map.of("destino",destino,"canal",canal,"codigo",codigo,"novaSenha",novaSenha),TokenResponse.class);}
  public static List<Categoria> categorias(){return lerLista("/api/v1/usuarios/"+Sessao.usuarioId()+"/categorias",new TypeReference<>(){});}
  public static Categoria criarCategoria(String nome,String cor){return enviar("POST","/api/v1/usuarios/"+Sessao.usuarioId()+"/categorias",Map.of("nome",nome,"cor",cor),Categoria.class);}
  public static List<Transacao> transacoes(){return lerLista("/api/v1/usuarios/"+Sessao.usuarioId()+"/transacoes",new TypeReference<>(){});}

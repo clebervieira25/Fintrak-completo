@@ -18,11 +18,15 @@ mvn clean javafx:run
 
 Na interface:
 
-1. Preencha nome, e-mail e senha e clique em **Criar conta**.
+1. Preencha nome, e-mail principal, senha, telefone e e-mail alternativo e clique em **Criar conta**.
 2. Clique em **Nova categoria** e crie `Salário`.
 3. Clique em **Nova transação** e cadastre uma receita.
-4. Crie a categoria `Alimentação` e cadastre uma despesa.
+4. Crie a categoria `Alimentação` e cadastre uma despesa. O saldo pode ficar negativo.
 5. Confira a tabela, o saldo e o relatório.
+
+Na tela de entrada, **Esqueci meu e-mail ou minha senha** permite solicitar um
+código por SMS ou e-mail alternativo. O envio real depende das configurações
+explicadas em `backend/README.md`.
 
 ## Roteiro curto para o vídeo
 

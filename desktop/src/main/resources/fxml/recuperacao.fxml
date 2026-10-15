@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fintrack.controller.RecuperacaoController" alignment="CENTER" spacing="14" styleClass="fundo">
+ <padding><Insets top="35" right="45" bottom="35" left="45"/></padding>
+ <Label text="Recuperar senha" styleClass="titulo-form"/>
+ <Label text="Informe o mesmo e-mail usado no cadastro do FinTrack." wrapText="true" maxWidth="360"/>
+ <TextField fx:id="campoEmail" promptText="E-mail cadastrado" maxWidth="360"/>
+ <Button text="Enviar código por e-mail" onAction="#enviarCodigo"/>
+ <Separator maxWidth="360"/>
+ <Label text="Digite o código recebido e escolha uma nova senha." wrapText="true" maxWidth="360"/>
+ <TextField fx:id="campoCodigo" promptText="Código de 6 dígitos" maxWidth="360"/>
+ <PasswordField fx:id="campoNovaSenha" promptText="Nova senha (mínimo de 8 caracteres)" maxWidth="360"/>
+ <Button text="Redefinir senha e entrar" onAction="#redefinir" styleClass="botao-primario"/>
+ <Label fx:id="mensagem" textFill="#b42318" wrapText="true" maxWidth="380"/>
+ <Label text="O código expira em 10 minutos e só pode ser usado uma vez." wrapText="true" maxWidth="360"/>
+</VBox>

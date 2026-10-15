@@ -3,17 +3,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fintrack.controller.LoginController" alignment="CENTER" spacing="14" styleClass="fundo">
- <padding><Insets top="35" right="45" bottom="35" left="45"/></padding>
+ <padding><Insets top="40" right="45" bottom="40" left="45"/></padding>
  <Label text="FinTrack" styleClass="titulo-form"/>
- <Label text="Entre ou crie sua conta para acessar suas finanças" wrapText="true"/>
- <TextField fx:id="campoNome" promptText="Nome (necessário somente no cadastro)" maxWidth="360"/>
+ <Label text="Controle suas finanças de forma simples e segura" wrapText="true"/>
+ <TextField fx:id="campoNome" promptText="Nome (somente para criar conta)" maxWidth="360"/>
  <TextField fx:id="campoEmail" promptText="E-mail" maxWidth="360"/>
  <PasswordField fx:id="campoSenha" promptText="Senha (mínimo de 8 caracteres)" maxWidth="360"/>
- <Label fx:id="mensagem" textFill="#b42318" wrapText="true"/>
+ <Label fx:id="mensagem" textFill="#b42318" wrapText="true" maxWidth="360"/>
  <HBox alignment="CENTER" spacing="10">
   <Button text="Entrar" onAction="#login" styleClass="botao-primario"/>
   <Button text="Criar conta" onAction="#registrar"/>
  </HBox>
- <Separator/>
- <Label text="A API precisa estar em execução em http://localhost:8080" wrapText="true"/>
+ <Hyperlink text="Esqueci minha senha" onAction="#abrirRecuperacao"/>
+ <Separator maxWidth="360"/>
+ <Label text="A recuperação de senha é feita pelo e-mail cadastrado." wrapText="true" maxWidth="360"/>
 </VBox>

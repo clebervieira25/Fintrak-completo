@@ -44,7 +44,7 @@ Fluxo recomendado para testar:
 3. Clique em **Authorize** no topo do Swagger.
 4. Cole somente o token. O Swagger acrescenta `Bearer` automaticamente.
 5. Crie uma categoria.
-6. Crie primeiro uma receita e depois uma despesa.
+6. Crie receitas e despesas. Despesas podem deixar o saldo negativo.
 7. Consulte o relatório de saldo.
 
 Exemplo de registro:
@@ -53,9 +53,58 @@ Exemplo de registro:
 {
   "nome": "Michelle",
   "email": "michelle@example.com",
-  "senha": "SenhaSegura123"
+  "senha": "SenhaSegura123",
+  "telefone": "+5585999999999",
+  "emailAlternativo": "michelle.recuperacao@example.com"
 }
 ```
+
+O telefone deve utilizar o formato internacional: `+55`, DDD e número, sem
+espaços. O e-mail alternativo precisa ser diferente do e-mail principal.
+
+## Recuperação de acesso por SMS e e-mail
+
+O código possui seis dígitos, expira em dez minutos, aceita no máximo cinco
+tentativas e só pode ser utilizado uma vez. Após a confirmação, a API redefine
+a senha e retorna um JWT, permitindo que a interface entre na conta e mostre o
+e-mail principal ao usuário.
+
+### Configurar SMS com Twilio
+
+Crie uma conta e um número remetente no Twilio. Antes de iniciar a API, informe
+as credenciais no mesmo PowerShell:
+
+```powershell
+$env:TWILIO_ACCOUNT_SID="AC..."
+$env:TWILIO_AUTH_TOKEN="seu-token"
+$env:TWILIO_FROM_NUMBER="+1..."
+```
+
+Em contas de avaliação, o telefone destinatário precisa estar autorizado no
+painel do Twilio. Nunca coloque o token diretamente no código ou no GitHub.
+
+### Configurar e-mail real
+
+O exemplo abaixo usa SMTP do Gmail. Ative a verificação em duas etapas e crie
+uma senha de aplicativo; não use a senha normal da conta:
+
+```powershell
+$env:MAIL_HOST="smtp.gmail.com"
+$env:MAIL_PORT="587"
+$env:MAIL_USERNAME="seuemail@gmail.com"
+$env:MAIL_PASSWORD="sua-senha-de-aplicativo"
+$env:MAIL_FROM="seuemail@gmail.com"
+```
+
+Execute `mvn spring-boot:run` no mesmo terminal em que definiu as variáveis.
+Elas precisam ser configuradas novamente em outro computador.
+
+### Fluxo da recuperação
+
+1. `POST /api/auth/recovery/request` recebe `destino` e `canal` (`SMS` ou `EMAIL`).
+2. A API envia o código ao telefone ou e-mail alternativo previamente cadastrado.
+3. `POST /api/auth/recovery/confirm` recebe destino, canal, código e nova senha.
+4. A API redefine a senha e devolve o token e o e-mail principal.
 
 Exemplo de categoria:
 
@@ -86,6 +135,8 @@ Exemplo de transação — use o ID da categoria criada:
 |---|---|---|
 | POST | `/api/auth/register` | Registra usuário e retorna JWT |
 | POST | `/api/auth/login` | Autentica e retorna JWT |
+| POST | `/api/auth/recovery/request` | Envia código de recuperação |
+| POST | `/api/auth/recovery/confirm` | Redefine senha e retorna JWT |
 | GET/POST | `/api/v1/usuarios/{usuarioId}/categorias` | Lista/cria categorias próprias |
 | PUT/DELETE | `/api/v1/usuarios/{usuarioId}/categorias/{id}` | Altera/remove categoria própria |
 | GET/POST | `/api/v1/usuarios/{usuarioId}/transacoes` | Lista/cria transações próprias |
@@ -98,6 +149,7 @@ aceita `inicio` e `fim` no formato `AAAA-MM-DD`.
 ## Segurança e confidencialidade
 
 - Senhas são armazenadas com BCrypt, nunca em texto puro.
+- Códigos de recuperação também são armazenados como hash BCrypt.
 - A API não utiliza sessão: cada requisição protegida exige JWT.
 - O JWT expira após duas horas.
 - `@PreAuthorize` compara o ID da URL com o ID do usuário autenticado.
@@ -133,8 +185,8 @@ substituir os valores locais.
 mvn test
 ```
 
-O teste unitário de `TransacaoService` valida o cálculo de saldo e confirma que
-uma despesa superior ao saldo gera `SaldoInsuficienteException`.
+Os testes unitários de `TransacaoService` validam o cálculo de saldo e confirmam
+que despesas podem ser cadastradas mesmo quando deixam o saldo negativo.
 
 ## Organização
 
@@ -155,8 +207,8 @@ src/main/java/br/com/fintrack/
 - `200`: consulta ou alteração concluída;
 - `201`: usuário, categoria ou transação criada;
 - `204`: remoção concluída;
-- `400`: validação ou saldo insuficiente;
+- `400`: dados inválidos, código expirado ou serviço de envio não configurado;
 - `401`: JWT ausente/inválido ou login incorreto;
 - `403`: tentativa de acessar outro usuário;
 - `404`: recurso próprio não encontrado;
-- `409`: e-mail/categoria duplicada ou categoria ainda em uso.
+- `409`: e-mail, telefone ou categoria duplicada, ou categoria ainda em uso.
