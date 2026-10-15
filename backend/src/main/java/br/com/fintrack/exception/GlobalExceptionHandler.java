@@ -3,7 +3,7 @@ import jakarta.validation.ConstraintViolationException; import org.springframewo
 @RestControllerAdvice public class GlobalExceptionHandler{
  public record Erro(Instant timestamp,int status,String erro,String mensagem){}
  @ExceptionHandler(ResourceNotFoundException.class) @ResponseStatus(HttpStatus.NOT_FOUND) Erro notFound(ResourceNotFoundException e){return erro(404,"Recurso não encontrado",e.getMessage());}
- @ExceptionHandler({ValidationException.class,SaldoInsuficienteException.class,ConstraintViolationException.class}) @ResponseStatus(HttpStatus.BAD_REQUEST) Erro badRequest(Exception e){return erro(400,"Requisição inválida",e.getMessage());}
+ @ExceptionHandler({ValidationException.class,ConstraintViolationException.class}) @ResponseStatus(HttpStatus.BAD_REQUEST) Erro badRequest(Exception e){return erro(400,"Requisição inválida",e.getMessage());}
  @ExceptionHandler(MethodArgumentNotValidException.class) @ResponseStatus(HttpStatus.BAD_REQUEST) Erro validation(MethodArgumentNotValidException e){String m=e.getBindingResult().getFieldErrors().stream().map(x->x.getField()+": "+x.getDefaultMessage()).collect(Collectors.joining("; "));return erro(400,"Dados inválidos",m);}
  @ExceptionHandler({ConflitoException.class,DataIntegrityViolationException.class}) @ResponseStatus(HttpStatus.CONFLICT) Erro conflict(Exception e){return erro(409,"Conflito",e instanceof ConflitoException?e.getMessage():"A operação viola uma restrição de dados.");}
  @ExceptionHandler(BadCredentialsException.class) @ResponseStatus(HttpStatus.UNAUTHORIZED) Erro unauthorized(BadCredentialsException e){return erro(401,"Não autorizado","E-mail ou senha inválidos.");}

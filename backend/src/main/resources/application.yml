@@ -2,7 +2,7 @@ spring:
   application:
     name: fintrack-api
   datasource:
-    url: jdbc:h2:file:./data/fintrack;AUTO_SERVER=TRUE
+    url: jdbc:h2:file:${user.home}/AppData/Local/FinTrack/data/fintrack;AUTO_SERVER=TRUE
     username: sa
     password:
     driver-class-name: org.h2.Driver
@@ -16,14 +16,33 @@ spring:
   h2:
     console:
       enabled: false
+  mail:
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    test-connection: false
 
 server:
   port: 8080
 
 app:
   jwt:
-    secret: ${JWT_SECRET:VGhpcy1pcy1hLWRldi1vbmx5LWtleS10aGF0LW11c3QtYmUtcmVwbGFjZWQtaW4tcHJvZA==}
+    secret: ${JWT_SECRET}
     expiration: PT2H
+  recovery:
+    expiration: PT10M
+    email-from: ${MAIL_FROM}}
+    twilio:
+      account-sid: ${TWILIO_ACCOUNT_SID}
+      auth-token: ${TWILIO_AUTH_TOKEN}
+      from-number: ${TWILIO_FROM_NUMBER}
 
 springdoc:
   swagger-ui:

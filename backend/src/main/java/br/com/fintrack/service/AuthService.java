@@ -5,5 +5,5 @@ import br.com.fintrack.dto.AuthDTOs.*; import br.com.fintrack.exception.Conflito
  public AuthService(UsuarioRepository u,PasswordEncoder e,AuthenticationManager m,JwtService j){usuarios=u;encoder=e;manager=m;jwt=j;}
  @Transactional public TokenResponse registrar(RegistroRequest d){if(usuarios.existsByEmailIgnoreCase(d.email()))throw new ConflitoException("E-mail já cadastrado.");Usuario u=usuarios.save(new Usuario(d.nome().trim(),d.email().trim(),encoder.encode(d.senha())));return token(UsuarioPrincipal.de(u));}
  public TokenResponse login(LoginRequest d){Authentication a=manager.authenticate(new UsernamePasswordAuthenticationToken(d.email(),d.senha()));return token((UsuarioPrincipal)a.getPrincipal());}
- private TokenResponse token(UsuarioPrincipal p){return new TokenResponse(jwt.gerar(p),"Bearer",p.id(),p.nome(),p.email());}
+ TokenResponse token(UsuarioPrincipal p){return new TokenResponse(jwt.gerar(p),"Bearer",p.id(),p.nome(),p.email());}
 }

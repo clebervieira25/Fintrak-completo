@@ -1,25 +1,13 @@
-# Maven
+﻿.idea/
 **/target/
-
-# IntelliJ
-.idea/
-**/.idea/
-*.iml
-**/*.iml
-
-# Bancos locais
-backend/data/
-desktop/fintrack.db
+installer/input/
+installer/image/
+installer/output/
+installer/output-final/
+**/data/
 *.db
-*.db-journal
-
-# Configurações e segredos
-.env
-**/.env
-**/application-local.yml
-**/application-local.properties
-
-# Logs e sistema
+*.mv.db
+*.trace.db
 *.log
-Thumbs.db
-.DS_Store
+.env
+application-local.yml
