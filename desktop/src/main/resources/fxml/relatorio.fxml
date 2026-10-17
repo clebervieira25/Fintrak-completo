@@ -4,20 +4,63 @@
 <?import javafx.scene.layout.*?>
 
 <VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.fintrack.controller.RelatorioController"
-      spacing="18" prefWidth="480" styleClass="fundo">
-    <padding><Insets top="26" right="30" bottom="26" left="30"/></padding>
-    <Label text="Resumo financeiro" styleClass="titulo-form"/>
-    <GridPane hgap="30" vgap="14" styleClass="cartao">
-        <padding><Insets top="20" right="22" bottom="20" left="22"/></padding>
-        <Label text="Total de receitas" GridPane.rowIndex="0"/>
-        <Label fx:id="labelReceitas" text="R$ 0,00" styleClass="valor-receita" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
-        <Label text="Total de despesas" GridPane.rowIndex="1"/>
+      spacing="14" prefWidth="1100" prefHeight="700" styleClass="fundo">
+    <padding><Insets top="22" right="26" bottom="22" left="26"/></padding>
+
+    <Label text="Relatório financeiro por categoria" styleClass="titulo-form"/>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="De:"/>
+        <DatePicker fx:id="filtroInicio" promptText="Data inicial"/>
+        <Label text="Até:"/>
+        <DatePicker fx:id="filtroFim" promptText="Data final"/>
+        <ComboBox fx:id="filtroCategoria" promptText="Todas as categorias" prefWidth="190"/>
+        <ComboBox fx:id="filtroTipo" promptText="Receitas e despesas" prefWidth="180"/>
+        <Button text="Aplicar filtros" onAction="#aplicarFiltros" styleClass="botao-primario"/>
+        <Button text="Limpar" onAction="#limparFiltros"/>
+    </HBox>
+
+    <GridPane hgap="24" vgap="8" styleClass="cartao">
+        <padding><Insets top="14" right="18" bottom="14" left="18"/></padding>
+        <Label text="Receitas" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <Label fx:id="labelReceitas" text="R$ 0,00" styleClass="valor-receita" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <Label text="Despesas" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
         <Label fx:id="labelDespesas" text="R$ 0,00" styleClass="valor-despesa" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-        <Separator GridPane.columnSpan="2" GridPane.rowIndex="2"/>
-        <Label text="Saldo" styleClass="saldo-legenda" GridPane.rowIndex="3"/>
-        <Label fx:id="labelSaldo" text="R$ 0,00" styleClass="saldo-valor" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-        <Label text="Transações cadastradas" GridPane.rowIndex="4"/>
-        <Label fx:id="labelQuantidade" text="0" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+        <Label text="Saldo" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+        <Label fx:id="labelSaldo" text="R$ 0,00" styleClass="saldo-valor" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+        <Label text="Lançamentos" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+        <Label fx:id="labelQuantidade" text="0" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
     </GridPane>
+
+    <SplitPane dividerPositions="0.43" VBox.vgrow="ALWAYS">
+        <items>
+            <VBox spacing="8">
+                <Label text="Totais por categoria" styleClass="subtitulo"/>
+                <Label text="Clique em uma categoria para visualizar seus lançamentos." wrapText="true"/>
+                <TableView fx:id="tabelaCategorias" VBox.vgrow="ALWAYS"><placeholder><Label text="Nenhuma categoria encontrada"/></placeholder>
+                    <columns>
+                        <TableColumn fx:id="colunaCategoria" text="Categoria" prefWidth="145"/>
+                        <TableColumn fx:id="colunaQuantidadeCategoria" text="Itens" prefWidth="55"/>
+                        <TableColumn fx:id="colunaReceitasCategoria" text="Receitas" prefWidth="105"/>
+                        <TableColumn fx:id="colunaDespesasCategoria" text="Despesas" prefWidth="105"/>
+                        <TableColumn fx:id="colunaSaldoCategoria" text="Saldo" prefWidth="105"/>
+                    </columns>
+                </TableView>
+            </VBox>
+            <VBox spacing="8">
+                <Label fx:id="labelDetalhes" text="Lançamentos da categoria" styleClass="subtituloo"/>
+                <TableView fx:id="tabelaDetalhes" VBox.vgrow="ALWAYS"><placeholder><Label text="Selecione uma categoria"/></placeholder>
+                    <columns>
+                        <TableColumn fx:id="colunaData" text="Data" prefWidth="90"/>
+                        <TableColumn fx:id="colunaDescricao" text="Descrição" prefWidth="155"/>
+                        <TableColumn fx:id="colunaObservacao" text="Observação" prefWidth="190"/>
+                        <TableColumn fx:id="colunaTipo" text="Tipo" prefWidth="90"/>
+                        <TableColumn fx:id="colunaValor" text="Valor" prefWidth="105"/>
+                    </columns>
+                </TableView>
+            </VBox>
+        </items>
+    </SplitPane>
+
     <HBox alignment="CENTER_RIGHT"><Button text="Fechar" onAction="#fechar"/></HBox>
 </VBox>

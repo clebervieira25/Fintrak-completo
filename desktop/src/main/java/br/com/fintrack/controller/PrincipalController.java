@@ -76,7 +76,7 @@ public class PrincipalController {
             Stage janela = criarJanela("Relatório financeiro", raiz);
             janela.showAndWait();
         } catch (IOException e) {
-            alerta(Alert.AlertType.ERROR, "Erro", "Não foi possível abrir o relatório.");
+            e.printStackTrace(); alerta(Alert.AlertType.ERROR, "Erro", "Não foi possível abrir o relatório: " + e.getMessage());
         }
     }
 
