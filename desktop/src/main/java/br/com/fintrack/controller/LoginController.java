@@ -7,26 +7,73 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+import java.util.prefs.Preferences;
+
 public class LoginController {
+    private static final String CHAVE_EMAIL = "ultimoEmail";
+
     @FXML private TextField campoNome;
     @FXML private TextField campoEmail;
     @FXML private PasswordField campoSenha;
+    @FXML private TextField campoSenhaVisivel;
+    @FXML private CheckBox lembrarEmail;
+    @FXML private ToggleButton botaoMostrarSenha;
     @FXML private Label mensagem;
+
+    private final Preferences preferencias = Preferences.userNodeForPackage(LoginController.class);
+
+    @FXML
+    private void initialize() {
+        campoSenha.textProperty().bindBidirectional(campoSenhaVisivel.textProperty());
+
+        String emailSalvo = preferencias.get(CHAVE_EMAIL, "");
+        if (!emailSalvo.isBlank()) {
+            campoEmail.setText(emailSalvo);
+            lembrarEmail.setSelected(true);
+            campoSenha.requestFocus();
+        }
+    }
 
     @FXML private void login() { autenticar(false); }
     @FXML private void registrar() { autenticar(true); }
 
+    @FXML
+    private void alternarSenha() {
+        boolean mostrar = botaoMostrarSenha.isSelected();
+        campoSenhaVisivel.setVisible(mostrar);
+        campoSenhaVisivel.setManaged(mostrar);
+        campoSenha.setVisible(!mostrar);
+        campoSenha.setManaged(!mostrar);
+        botaoMostrarSenha.setText(mostrar ? "Ocultar senha" : "Mostrar senha");
+
+        TextField campoAtivo = mostrar ? campoSenhaVisivel : campoSenha;
+        campoAtivo.requestFocus();
+        campoAtivo.positionCaret(campoAtivo.getText().length());
+    }
+
     private void autenticar(boolean novo) {
         try {
             if (novo && campoNome.getText().isBlank()) throw new ApiException("Informe o nome.");
-            if (campoEmail.getText().isBlank()) throw new ApiException("Informe o e-mail.");
+            if (campoEmail.getText().isBlank()) throw new ApiException("Informe oe -mail.");
             if (campoSenha.getText().length() < 8) throw new ApiException("A senha deve ter pelo menos 8 caracteres.");
+
+            String email = campoEmail.getText().trim();
             var r = novo
-                    ? ApiClient.registrar(campoNome.getText(), campoEmail.getText(), campoSenha.getText())
-                    : ApiClient.login(campoEmail.getText(), campoSenha.getText());
+                    ? ApiClient.registrar(campoNome.getText(), email, campoSenha.getText())
+                    : ApiClient.login(email, campoSenha.getText());
+
+            salvarPreferenciaEmail(email);
             abrirPrincipal(r);
         } catch (Exception e) {
             mensagem.setText(e.getMessage());
+        }
+    }
+
+    private void salvarPreferenciaEmail(String email) {
+        if (lembrarEmail.isSelected()) {
+            preferencias.put(CHAVE_EMAIL, email);
+        } else {
+            preferencias.remove(CHAVE_EMAIL);
         }
     }
 
