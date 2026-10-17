@@ -38,7 +38,7 @@ app:
     expiration: PT2H
   recovery:
     expiration: PT10M
-    email-from: ${MAIL_FROM}}
+    email-from: ${MAIL_FROM}
     twilio:
       account-sid: ${TWILIO_ACCOUNT_SID}
       auth-token: ${TWILIO_AUTH_TOKEN}

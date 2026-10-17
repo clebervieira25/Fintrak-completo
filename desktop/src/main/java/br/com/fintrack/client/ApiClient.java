@@ -14,6 +14,8 @@ public final class ApiClient {
  public static TokenResponse confirmarRecuperacao(String destino,String canal,String codigo,String novaSenha){return enviarPublico("/api/auth/recovery/confirm",Map.of("destino",destino,"canal",canal,"codigo",codigo,"novaSenha",novaSenha),TokenResponse.class);}
  public static List<Categoria> categorias(){return lerLista("/api/v1/usuarios/"+Sessao.usuarioId()+"/categorias",new TypeReference<>(){});}
  public static Categoria criarCategoria(String nome,String cor){return enviar("POST","/api/v1/usuarios/"+Sessao.usuarioId()+"/categorias",Map.of("nome",nome,"cor",cor),Categoria.class);}
+ public static List<Subcategoria> subcategorias(Long categoriaId){return lerLista("/api/v1/usuarios/"+Sessao.usuarioId()+"/categorias/"+categoriaId+"/subcategorias",new TypeReference<>(){});}
+ public static Subcategoria criarSubcategoria(Long categoriaId,String nome){return enviar("POST","/api/v1/usuarios/"+Sessao.usuarioId()+"/categorias/"+categoriaId+"/subcategorias",Map.of("nome",nome),Subcategoria.class);}
  public static List<Transacao> transacoes(){return lerLista("/api/v1/usuarios/"+Sessao.usuarioId()+"/transacoes",new TypeReference<>(){});}
  public static Transacao salvar(Transacao t){String rota="/api/v1/usuarios/"+Sessao.usuarioId()+"/transacoes"+(t.getId()==null?"":"/"+t.getId());return enviar(t.getId()==null?"POST":"PUT",rota,t,Transacao.class);}
  public static void remover(int id){requisicao("DELETE","/api/v1/usuarios/"+Sessao.usuarioId()+"/transacoes/"+id,null);}
